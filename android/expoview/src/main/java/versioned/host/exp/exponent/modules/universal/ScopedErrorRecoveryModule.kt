@@ -7,19 +7,12 @@ import host.exp.exponent.ExponentManifest
 import host.exp.exponent.kernel.ExperienceId
 import org.json.JSONObject
 import org.unimodules.core.ModuleRegistry
-import org.unimodules.interfaces.constants.ConstantsInterface
 
-class ScopedErrorRecoveryModule(context: Context, val experienceId: ExperienceId) : ErrorRecoveryModule(context) {
+class ScopedErrorRecoveryModule(context: Context, manifest: JSONObject, val experienceId: ExperienceId) : ErrorRecoveryModule(context) {
+  private val mCurrentVersion = manifest.getString(ExponentManifest.MANIFEST_SDK_VERSION_KEY) ?: ""
+
   override fun onCreate(moduleRegistry: ModuleRegistry) {
-    val manifestString = moduleRegistry.getModule(ConstantsInterface::class.java)?.constants?.get("manifest")
-    val currentVersion = if (manifestString != null) {
-      val manifest = JSONObject(manifestString as String)
-      manifest.getString(ExponentManifest.MANIFEST_SDK_VERSION_KEY)
-    } else {
-      ""
-    }
-
-    mSharedPreferences = context.applicationContext.getSharedPreferences("$RECOVERY_STORE$currentVersion", Context.MODE_PRIVATE)
+    mSharedPreferences = context.applicationContext.getSharedPreferences("$RECOVERY_STORE.$mCurrentVersion", Context.MODE_PRIVATE)
   }
 
   override fun setRecoveryProps(props: String) {

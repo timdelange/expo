@@ -14,7 +14,6 @@ import host.exp.exponent.di.NativeModuleDepsProvider;
 import host.exp.exponent.kernel.ExperienceId;
 import host.exp.exponent.storage.ExponentSharedPreferences;
 
-// todo: Remove this once SDK34 is phased out
 public class ErrorRecoveryManager {
 
   private static final long FIVE_MINUTES_MS = 5 * 60 * 1000;
@@ -53,10 +52,12 @@ public class ErrorRecoveryManager {
     markErrored(false);
   }
 
+  // todo: Remove this once SDK35 is phased out
   public void setRecoveryProps(JSONObject props) {
     mRecoveryProps = props;
   }
 
+  // todo: Remove this once SDK35 is phased out
   public JSONObject popRecoveryProps() {
     final JSONObject props = mErrored ? mRecoveryProps : null;
     if (mErrored) {

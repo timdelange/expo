@@ -22,7 +22,7 @@ UM_EXPORT_METHOD_AS(saveRecoveryProps,
 - (NSDictionary *)constantsToExport
 {
   return @{
-           @"recoveredProps": [self consumeRecoveryProps]
+           @"recoveredProps": UMNullIfNil([self consumeRecoveryProps])
            };
 }
 
@@ -46,7 +46,7 @@ UM_EXPORT_METHOD_AS(saveRecoveryProps,
 
 - (NSString *)userDefaultsKey
 {
-  return @"expo.errorRecovery";
+  return NSStringFromClass([self class]);
 }
 
 @end

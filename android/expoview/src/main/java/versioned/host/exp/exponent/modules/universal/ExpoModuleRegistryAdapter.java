@@ -59,7 +59,7 @@ public class ExpoModuleRegistryAdapter extends ModuleRegistryAdapter implements 
     moduleRegistry.registerExportedModule(new ScopedFileSystemModule(scopedContext));
 
     // Overriding expo-error-recovery ErrorRecoveryModule
-    moduleRegistry.registerExportedModule(new ScopedErrorRecoveryModule(scopedContext, experienceId));
+    moduleRegistry.registerExportedModule(new ScopedErrorRecoveryModule(scopedContext, manifest, experienceId));
 
     // Add SpongyCastle integration
     moduleRegistry.registerExportedModule(new SecureStoreModuleBinding(scopedContext));

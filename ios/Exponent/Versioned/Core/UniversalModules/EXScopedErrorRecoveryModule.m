@@ -22,18 +22,11 @@
 - (BOOL)setRecoveryProps:(NSString *)props
 {
   NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-  NSDictionary *errorRecoveryStore = [preferences objectForKey:[self userDefaultsKey]];
-  if (!errorRecoveryStore) {
-    return [EXScopedErrorRecoveryModule updateUserDefaults:preferences
-                                    withErrorRecoveryStore:@{ _experienceId: props }
-                                                   withKey:[self userDefaultsKey]];
-  } else {
-    NSMutableDictionary *propsToSave = [errorRecoveryStore mutableCopy];
-    [propsToSave setObject:props forKey:_experienceId];
-    return [EXScopedErrorRecoveryModule updateUserDefaults:preferences
-                                    withErrorRecoveryStore:propsToSave
-                                                   withKey:[self userDefaultsKey]];
-  }
+  NSDictionary *errorRecoveryStore = [preferences objectForKey:[self userDefaultsKey]] ?: @{};
+  NSMutableDictionary *newStore = [errorRecoveryStore mutableCopy];
+  newStore[_experienceId] = props;
+  [preferences setObject:newStore forKey:[self userDefaultsKey]];
+  return [preferences synchronize];
 }
 
 - (NSString *)consumeRecoveryProps
@@ -45,29 +38,13 @@
     if (props) {
       NSMutableDictionary *storeWithRemovedProps = [errorRecoveryStore mutableCopy];
       [storeWithRemovedProps removeObjectForKey:_experienceId];
-      
-      [EXScopedErrorRecoveryModule updateUserDefaults:preferences
-                               withErrorRecoveryStore:storeWithRemovedProps
-                                              withKey:[self userDefaultsKey]];
+      [preferences setObject:storeWithRemovedProps forKey:[self userDefaultsKey]];
+      [preferences synchronize];
       return props;
     }
   }
   return nil;
 }
 
-+ (BOOL)updateUserDefaults:(NSUserDefaults *)preferences
-    withErrorRecoveryStore:(NSDictionary *)newStore
-                   withKey:(NSString *)key
-{
-  [preferences setObject:newStore forKey:key];
-  return [preferences synchronize];
-}
-
-- (NSString *)userDefaultsKey
-{
-   // We don't want to recovery props propagate from one version to another.
-   // `EX` will be changed to `ABI_X_X` during versioning.
-  return [NSString stringWithFormat:@"EX.%@", [super userDefaultsKey]];
-}
 @end
 #endif

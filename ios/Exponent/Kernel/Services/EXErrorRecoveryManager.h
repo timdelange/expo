@@ -6,7 +6,6 @@
 
 #import "EXKernelService.h"
 
-// TODO: Remove once SDK34 is phased out
 @protocol EXErrorRecoveryScopedModuleDelegate
 
 - (void)setDeveloperInfo:(NSDictionary *)developerInfo forScopedModule:(id)scopedModule;
