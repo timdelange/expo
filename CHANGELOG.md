@@ -23,6 +23,7 @@ This is the log of notable changes to the Expo client that are developer-facing.
 - Fixed `MediaLibrary.getMomentsAsync` crashing if `locationNames` array is null. ([#5937](https://github.com/expo/expo/pull/5937) by [@lukmccall](https://github.com/lukmccall))
 - Fixed `MediaLibrary.getAlbumsAsync()` not getting albums in folders on iOS. ([#5857](https://github.com/expo/expo/pull/5857) by [@lukmccall](https://github.com/lukmccall))
 - Fixed unclosed http connections in `FileSystem.downloadAsync` method. ([#5840](https://github.com/expo/expo/pull/5840) by [@bbarthec](https://github.com/bbarthec))
+- Fixed scanning `PDF417` in `BarCodeScanner` on iOS. ([#5976](https://github.com/expo/expo/pull/5531) by [@bbarthec](https://github.com/bbarthec))
 
 ## 35.0.0
 
