@@ -124,7 +124,7 @@
   return @{
        @"id": source.sourceIdentifier,
        @"type": [ABI33_0_0EXCalendarConverter _sourceType:source.sourceType],
-       @"name": source.title
+       @"name": ABI33_0_0UMNullIfNil(source.title)
        };
 }
 
