@@ -50,7 +50,7 @@
   if (self = [super init]) {
     _isRemote = isRemote;
     _isFromBackground = isFromBackground;
-    _experienceId = experienceId;
+    _experienceId = (experienceId == nil) ? @"NONE" : experienceId;
     _body = body ?: @{};
     _actionId = actionId;
     _userText = userText;

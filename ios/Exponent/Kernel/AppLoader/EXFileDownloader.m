@@ -7,6 +7,8 @@
 #import "EXKernelUtil.h"
 
 #import <React/RCTUtils.h>
+#import "InstanceId.h"
+
 
 @import UIKit;
 
@@ -66,6 +68,7 @@ NSTimeInterval const EXFileDownloaderDefaultTimeoutInterval = 60;
 
 - (void)setHTTPHeaderFields:(NSMutableURLRequest *)request
 {
+  [request setValue:[InstanceId getId] forHTTPHeaderField:@"MVDX-INSTALL-ID"];
   [request setValue:[self _userAgentString] forHTTPHeaderField:@"User-Agent"];
   
   NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
