@@ -9,6 +9,8 @@
 #import "EXProvisioningProfile.h"
 
 #import <React/RCTUtils.h>
+#import "InstanceId.h"
+
 
 @import UIKit;
 
@@ -68,6 +70,7 @@ NSTimeInterval const EXFileDownloaderDefaultTimeoutInterval = 60;
 
 - (void)setHTTPHeaderFields:(NSMutableURLRequest *)request
 {
+  [request setValue:[InstanceId getId] forHTTPHeaderField:@"MVDX-INSTALL-ID"];
   [request setValue:[self _userAgentString] forHTTPHeaderField:@"User-Agent"];
   
   NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
@@ -99,7 +102,7 @@ NSTimeInterval const EXFileDownloaderDefaultTimeoutInterval = 60;
 #endif
   }
   NSString * clientReleaseType= [EXProvisioningProfile clientReleaseTypeToString:[EXProvisioningProfile clientReleaseType]];
-  
+
   [request setValue:releaseChannel forHTTPHeaderField:@"Expo-Release-Channel"];
   [request setValue:@"true" forHTTPHeaderField:@"Expo-JSON-Error"];
   [request setValue:requestAbiVersion forHTTPHeaderField:@"Exponent-SDK-Version"];
